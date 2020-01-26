@@ -13,9 +13,7 @@ class Worker {
     setRate (rate) {
       this.rate=rate
     }
-    setRate (rate) {
-      this.rate=rate
-    }
+    
     setDays (days) {
       this.days=days
     }
