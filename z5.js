@@ -21,7 +21,7 @@
     }
 
     toString() {
-      return `Вектор {X: ${this.x}; Y: ${this.y}; Z: ${this.z}}\nДлина = ${this.getLength}`
+      return `Вектор {X: ${this.x}; Y: ${this.y}; Z: ${this.z}}`
     }
 
     valueOf() {
