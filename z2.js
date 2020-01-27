@@ -11,7 +11,8 @@ class MyString {
     ucWords (string) { 
     let arr = string.split(' '); 
     for (let key in arr) { 
-    arr[key] = arr[key].substr(0, 1).toUpperCase() + arr[key].substr(1); 
+    string = arr[key];
+    arr[key] = this.ucFirst(string); 
     } 
     return string = arr.join(' '); 
     } 
@@ -20,4 +21,4 @@ class MyString {
     var str = new MyString(); 
     console.log(str.reverse('abcde')); //выведет 'edcba' 
     console.log(str.ucFirst('abcde')); //выведет 'Abcde' 
-    console.log(str.ucWords('abcde abcde abcde')); //выведет 'Abcde Abcde Abcde' 
+    console.log(str.ucWords('abcde fbcde nbcde nmvg kjsdgh kjfha')); //выведет 'Abcde Abcde Abcde' 
