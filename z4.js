@@ -1,28 +1,27 @@
 class User {
-	constructor(name, surname) {
-		this.name = name;
-		this.surname = surname;
-	}
+  constructor(name, surname) {
+    this.name = name;
+    this.surname = surname;
+  }
 
-	getFullName() {
-		return this.name + ' ' + this.surname;
-	}
-} 
+  getFullName() {
+    return this.name + " " + this.surname;
+  }
+}
 
-class Student extends User { 
-constructor (name, surname, year){ 
-super(name, surname); 
-this.year = year; 
-} 
-getCourse() { 
-let now = new Date(), 
-nowYear = now.getFullYear(); 
-return nowYear - this.year; 
-} 
-} 
+class Student extends User {
+  constructor(name, surname, year) {
+    super(name, surname);
+    this.year = year;
+  }
+  getCourse() {
+    let now = new Date(),
+      nowYear = now.getFullYear();
+    return nowYear - this.year;
+  }
+}
 
-
-var student = new Student('Иван', 'Иванов', 2017);
+var student = new Student("Иван", "Иванов", 2017);
 
 console.log(student.name); //выведет 'Иван'
 console.log(student.surname); //выведет 'Иванов'
