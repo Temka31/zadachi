@@ -1,7 +1,7 @@
 class Thing {
     constructor(name){
         this.name=name;
-        this.def=Math.floor(Math.random()*10);
+        this.def=Math.floor(Math.random()*10)/10;
         this.atk=Math.floor(Math.random()*(100-1)-1);
         this.hp=Math.floor(Math.random()*90);
     }}
@@ -31,9 +31,24 @@ class Warrior extends Person{
         }
 
 }
+let things=[];
+for (let i=0; i<10; i++) {
+things[i] = new Thing (i)
+}
 
-var ol = new Thing ("3")
-console.log(ol.name);
-console.log(ol.def);
-console.log(ol.atk);
-console.log(ol.hp);
+var playerNames = ['Rabbit', 'Helpless', 'Warm', 'Dreaded', 'Foal', 
+'Desire', 'Kit', 'Angel', 'Dusty', 'Sweety', 'Frozen', 'Silver', 'Heavy', 'Wombat', 
+'Lost', 'Puma', 'Vital', 'Panda', 'Rolling Sun', 'Steel Runny'];
+var player = ['Paladin','Warrior'];
+
+let persons=[];
+for (let i=0; i<10; i++) {
+  if (Math.random()*90<50){
+persons[i] = new Paladin (playerNames[Math.floor(Math.random()*10)])
+} else{
+  persons[i] = new Warrior (playerNames[Math.floor(Math.random()*10)])
+}
+}
+console.log(things);
+console.log(persons);
+
