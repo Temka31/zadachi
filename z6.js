@@ -1,9 +1,9 @@
 class Thing {
-    constructor(name,def,atk){
+    constructor(name){
         this.name=name;
-        this.def=def;
-        this.atk=atk;
-        this.hp=hp;
+        this.def=Math.floor(Math.random()*10);
+        this.atk=Math.floor(Math.random()*(100-1)-1);
+        this.hp=Math.floor(Math.random()*90);
     }}
  class Person {
 constructor(name,hp,bAtk,bDef) {
@@ -32,3 +32,8 @@ class Warrior extends Person{
 
 }
 
+var ol = new Thing ("3")
+console.log(ol.name);
+console.log(ol.def);
+console.log(ol.atk);
+console.log(ol.hp);
