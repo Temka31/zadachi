@@ -1,36 +1,47 @@
 class Thing {
-  constructor(name) {
+  constructor(name, def, atk, hp) {
     this.name = name;
-    this.def = Math.floor(Math.random() * 10) / 10;
-    this.atk = Math.floor(Math.random() * (40 - 1 - 1));
-    this.hp = Math.floor(Math.random() * 90);
+    this.def = def;
+    this.atk = atk;
+    this.hp =hp;
   }
 }
 class Person {
-  constructor(name, hp, bAtk, bDef) {
+  constructor(name, bAtk, bDef) {
     this.name = name;
-    this.hp = hp;
-    this.bAtk = bAtk;
-    this.bDef = bDef;
+    this.hp = 100;
+    this.bAtk = 20;
+    this.bDef = 15;
   }
-  setThings(things) {}
+  setThings(things) {
+  
+    this.bDef=this.bDef*(1+things);
+
+}
   removeLife(attack) {
+  this.hp=this.hp-(attack*this.bDef) 
       
   }
 }
 class Paladin extends Person {
   constructor(name, hp, bAtk, bDef) {
-    super(name, hp * 2, bAtk, bDef * 2);
+    super(name, hp, bAtk, bDef);
+    this.hp=this.hp*2;
+    this.bDef=this.bDef*2;
   }
 }
 class Warrior extends Person {
   constructor(name, hp, bAtk, bDef) {
-    super(name, hp, bAtk * 2, bDef);
+    super(name, hp, bAtk, bDef);
+    this.bAtk=this.bAtk*2;
   }
 }
 let things = [];
 for (let i = 0; i < 10; i++) {
-  things[i] = new Thing(i);
+  def=Math.floor(Math.random() * 10) / 10;
+  atk = Math.floor(Math.random() * (40 - 1 - 1));
+  hp = Math.floor(Math.random() * 90);	
+  things[i] = new Thing(i, def, atk, hp);
 }
 
 var playerNames = [
@@ -59,11 +70,18 @@ var player = ["Paladin", "Warrior"];
 
 let persons = [];
 for (let i = 0; i < 10; i++) {
+  name=playerNames[Math.floor(Math.random() * 10)]
+  def=Math.floor(Math.random() * 10) / 10;
+  atk = Math.floor(Math.random() * (40 - 1 - 1));
+  hp = Math.floor(Math.random() * 90);
   if (Math.random() * 100 < 50) {
-    persons[i] = new Paladin(playerNames[Math.floor(Math.random() * 10)]);
+    
+    persons[i] = new Paladin(name);
   } else {
-    persons[i] = new Warrior(playerNames[Math.floor(Math.random() * 10)]);
+    persons[i] = new Warrior(name);
   }
 }
+persons[1].setThings(things[1].def);
+
 console.log(things);
 console.log(persons);
