@@ -7,18 +7,17 @@ class Thing {
   }
 }
 class Person {
-  constructor(name, bAtk, bDef) {
+  constructor(name, hp, bAtk, bDef) {
     this.name = name;
-    this.hp = 100;
-    this.bAtk = 20;
-    this.bDef = 15;
+    this.hp = hp;
+    this.bAtk = bAtk;
+    this.bDef = bDef;
   }
   setThings(things) {
-    this.things=[]
-    this.things[this.things.length+1]=things;
+    this.things = [];
+    this.things[this.things.length + 1] = things;
     this.bDef = this.bDef * (1 + things.def);
-    this.hp=this.hp+things.hp;
-
+    this.hp = this.hp + things.hp;
   }
   removeLife(attack) {
     this.hp = this.hp - attack * this.bDef;
@@ -27,8 +26,8 @@ class Person {
 class Paladin extends Person {
   constructor(name, hp, bAtk, bDef) {
     super(name, hp, bAtk, bDef);
-    this.hp = this.hp * 2;
-    this.bDef = this.bDef * 2;
+    this.hp = hp * 2;
+    this.bDef = bDef * 2;
   }
 }
 class Warrior extends Person {
@@ -41,7 +40,7 @@ let things = [];
 for (let i = 0; i < 10; i++) {
   def = Math.floor(Math.random() * 10) / 10;
   atk = Math.floor(Math.random() * (40 - 1 - 1));
-  hp = Math.floor(Math.random() * 90);
+  hp = Math.floor(Math.random() * 10);  
   things[i] = new Thing(i, def, atk, hp);
 }
 
@@ -71,24 +70,36 @@ var player = ["Paladin", "Warrior"];
 
 let persons = [];
 for (let i = 0; i < 10; i++) {
-  name = playerNames[Math.floor(Math.random() * 10)]
+  name = playerNames[Math.floor(Math.random() * 10)];
   def = Math.floor(Math.random() * 10) / 10;
   atk = Math.floor(Math.random() * (40 - 1 - 1));
-  hp = Math.floor(Math.random() * 90);
+  hp = Math.floor(Math.random() * (100-90)+90);
+  console.log(hp);
   if (Math.random() * 100 < 50) {
-
-    persons[i] = new Paladin(name);
+    persons[i] = new Paladin(name, hp, atk, def);
   } else {
-    persons[i] = new Warrior(name);
+    persons[i] = new Warrior(name, hp, atk, def);
   }
 }
 while (things.length > 0) {
-  persRand = Math.floor(Math.random() * persons.length)
-  thingsRand = Math.floor(Math.random() * things.length)
+  persRand = Math.floor(Math.random() * persons.length);
+  thingsRand = Math.floor(Math.random() * things.length);
   persons[persRand].setThings(things[thingsRand]);
-  things.splice(thingsRand, 1)
+  things.splice(thingsRand, 1);
 }
 
+while (persons.length>1){
+a=Math.floor(Math.random()*persons.length);
+b=Math.floor(Math.random()*persons.length);
+while(a==b){
+  b=Math.floor(Math.random()*persons.length);
+}
+persons[b].removeLife(persons[a].bAtk)
+if (persons[b].hp<0){
+  persons.splice(b, 1);
+}
 
+}
+console.log('Победитель ' + persons[0].name)
 console.log(things);
 console.log(persons);
