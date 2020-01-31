@@ -14,7 +14,8 @@ class Person {
     this.bDef = 15;
   }
   setThings(things) {
-  
+    thingss=[];
+    thingss[thingss.length+1]=things
     this.bDef=this.bDef*(1+things);
 
 }
@@ -80,8 +81,15 @@ for (let i = 0; i < 10; i++) {
   } else {
     persons[i] = new Warrior(name);
   }
+while (things.length>0){
+persRand=Math.floor(Math.random()*persons.length)
+thingsRand=Math.floor(Math.random()*things.length)
+persons[persRand].setThings(things[thingsRand].def);
+things.splice(thingsRand,1)
 }
+
 persons[1].setThings(things[1].def);
 
 console.log(things);
 console.log(persons);
+console.log(personss);
