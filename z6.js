@@ -3,7 +3,7 @@ class Thing {
     this.name = name;
     this.def = def;
     this.atk = atk;
-    this.hp =hp;
+    this.hp = hp;
   }
 }
 class Person {
@@ -14,34 +14,34 @@ class Person {
     this.bDef = 15;
   }
   setThings(things) {
-    thingss=[];
-    thingss[thingss.length+1]=things
-    this.bDef=this.bDef*(1+things);
+    this.things=[]
+    this.things[this.things.length+1]=things;
+    this.bDef = this.bDef * (1 + things.def);
+    this.hp=this.hp+things.hp;
 
-}
+  }
   removeLife(attack) {
-  this.hp=this.hp-(attack*this.bDef) 
-      
+    this.hp = this.hp - attack * this.bDef;
   }
 }
 class Paladin extends Person {
   constructor(name, hp, bAtk, bDef) {
     super(name, hp, bAtk, bDef);
-    this.hp=this.hp*2;
-    this.bDef=this.bDef*2;
+    this.hp = this.hp * 2;
+    this.bDef = this.bDef * 2;
   }
 }
 class Warrior extends Person {
   constructor(name, hp, bAtk, bDef) {
     super(name, hp, bAtk, bDef);
-    this.bAtk=this.bAtk*2;
+    this.bAtk = this.bAtk * 2;
   }
 }
 let things = [];
 for (let i = 0; i < 10; i++) {
-  def=Math.floor(Math.random() * 10) / 10;
+  def = Math.floor(Math.random() * 10) / 10;
   atk = Math.floor(Math.random() * (40 - 1 - 1));
-  hp = Math.floor(Math.random() * 90);	
+  hp = Math.floor(Math.random() * 90);
   things[i] = new Thing(i, def, atk, hp);
 }
 
@@ -71,25 +71,24 @@ var player = ["Paladin", "Warrior"];
 
 let persons = [];
 for (let i = 0; i < 10; i++) {
-  name=playerNames[Math.floor(Math.random() * 10)]
-  def=Math.floor(Math.random() * 10) / 10;
+  name = playerNames[Math.floor(Math.random() * 10)]
+  def = Math.floor(Math.random() * 10) / 10;
   atk = Math.floor(Math.random() * (40 - 1 - 1));
   hp = Math.floor(Math.random() * 90);
   if (Math.random() * 100 < 50) {
-    
+
     persons[i] = new Paladin(name);
   } else {
     persons[i] = new Warrior(name);
   }
-while (things.length>0){
-persRand=Math.floor(Math.random()*persons.length)
-thingsRand=Math.floor(Math.random()*things.length)
-persons[persRand].setThings(things[thingsRand].def);
-things.splice(thingsRand,1)
+}
+while (things.length > 0) {
+  persRand = Math.floor(Math.random() * persons.length)
+  thingsRand = Math.floor(Math.random() * things.length)
+  persons[persRand].setThings(things[thingsRand]);
+  things.splice(thingsRand, 1)
 }
 
-persons[1].setThings(things[1].def);
 
 console.log(things);
 console.log(persons);
-console.log(personss);
