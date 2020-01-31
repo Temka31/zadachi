@@ -20,7 +20,7 @@ class Person {
     this.hp = this.hp + things.hp;
   }
   removeLife(attack) {
-    this.hp = this.hp - attack * this.bDef;
+    this.hp = this.hp - (attack * (1+this.bDef));
   }
 }
 class Paladin extends Person {
@@ -37,10 +37,10 @@ class Warrior extends Person {
   }
 }
 let things = [];
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 20; i++) {
   def = Math.floor(Math.random() * 10) / 10;
   atk = Math.floor(Math.random() * (40 - 1 - 1));
-  hp = Math.floor(Math.random() * 10);  
+  hp = Math.floor(Math.random() * 10);
   things[i] = new Thing(i, def, atk, hp);
 }
 
@@ -73,7 +73,7 @@ for (let i = 0; i < 10; i++) {
   name = playerNames[Math.floor(Math.random() * 10)];
   def = Math.floor(Math.random() * 10) / 10;
   atk = Math.floor(Math.random() * (40 - 1 - 1));
-  hp = Math.floor(Math.random() * (100-90)+90);
+  hp = Math.floor(Math.random() * (100 - 90) + 90);
   console.log(hp);
   if (Math.random() * 100 < 50) {
     persons[i] = new Paladin(name, hp, atk, def);
@@ -81,6 +81,8 @@ for (let i = 0; i < 10; i++) {
     persons[i] = new Warrior(name, hp, atk, def);
   }
 }
+console.log(things);
+console.log(persons);
 while (things.length > 0) {
   persRand = Math.floor(Math.random() * persons.length);
   thingsRand = Math.floor(Math.random() * things.length);
@@ -88,18 +90,21 @@ while (things.length > 0) {
   things.splice(thingsRand, 1);
 }
 
-while (persons.length>1){
-a=Math.floor(Math.random()*persons.length);
-b=Math.floor(Math.random()*persons.length);
-while(a==b){
-  b=Math.floor(Math.random()*persons.length);
-}
-persons[b].removeLife(persons[a].bAtk)
-if (persons[b].hp<0){
-  persons.splice(b, 1);
-}
+while (persons.length > 1) {
+  a = Math.floor(Math.random() * persons.length);
+  b = Math.floor(Math.random() * persons.length);
+  while (a == b) {
+    b = Math.floor(Math.random() * persons.length);
+  }
+  console.log('Нападающий ' +persons[a].name);
+  console.log('Защита ' +persons[b].name);
+  persons[b].removeLife(persons[a].bAtk)
+  if (persons[b].hp < 0) {
+    console.log('Откинулся ' +persons[b].name);
+    persons.splice(b, 1);
+
+  }
 
 }
 console.log('Победитель ' + persons[0].name)
-console.log(things);
-console.log(persons);
+
