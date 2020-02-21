@@ -7,46 +7,56 @@ class Thing {
   }
 }
 class Person {
-  constructor(name, hp, bAtk, bDef) {
+  constructor(name, bHp, bAtk, bDef) {
     this.name = name;
-    this.hp = hp;
+    this.bHp = bHp;
     this.bAtk = bAtk;
     this.bDef = bDef;
-    
+    this.things = [];
+    this.hp = 1;
+    this.def = 1;
+    this.atk = 1;
+    this.calculateHp();
   }
   setThings(things) {
-      this.things=[];
     this.things.push(...things);
+    this.calculateHp();
     // this.bDef = this.bDef * (1 + things.def);
     // this.hp = this.hp + things.hp;
   }
   removeLife(attack) {
-    this.hp = this.hp - (attack * (1- this.bDef));
+    this.hp = this.hp - attack * (1 - this.def);
   }
-  equip(){
-    for (let i in this.things) {
-      this.bDef = this.bDef + this.things[i].def;
-      this.hp = this.hp + this.things[i].hp;
-      this.bAtk = this.bAtk + this.things[i].atk;
+  calculateHp() {
+    let tempHp = this.bHp;
+    let tempDef = this.bDef;
+    let tempAtk = this.bAtk;
+    for (let thing of this.things) {
+      tempHp += thing.hp;
+      tempDef += thing.def;
+      tempAtk += thing.atk;
     }
+    this.def = tempDef;
+    this.hp = tempHp;
+    this.atk = tempAtk;
+  }
+  isLive() {
+    return this.hp > 0;
   }
 }
 class Paladin extends Person {
-  constructor(name, hp, bAtk, bDef) {
-    super(name, hp, bAtk, bDef);
-    this.hp = hp * 2;
-    this.bDef = bDef * 2;
+  constructor(name, bHp, bAtk, bDef) {
+    super(name, bHp * 2, bAtk, bDef * 2);
   }
 }
 class Warrior extends Person {
   constructor(name, hp, bAtk, bDef) {
-    super(name, hp, bAtk, bDef);
-    this.bAtk = this.bAtk * 2;
+    super(name, hp, bAtk * 2, bDef);
   }
 }
 let things = [];
 for (let i = 0; i < 20; i++) {
-  def = Math.random() * (0.09) ;
+  def = Math.random() * 0.09;
   atk = Math.floor(Math.random() * 38);
   hp = Math.floor(Math.random() * 10);
   things[i] = new Thing(i, def, atk, hp);
@@ -79,7 +89,7 @@ var player = ["Paladin", "Warrior"];
 let persons = [];
 for (let i = 0; i < 10; i++) {
   name = playerNames[Math.floor(Math.random() * 10)];
-  def = Math.floor(Math.random() * (2-1)+1) / 10;
+  def = Math.floor(Math.random() * (2 - 1) + 1) / 10;
   atk = Math.floor(Math.random() * (40 - 1 - 1));
   hp = Math.floor(Math.random() * (100 - 90) + 90);
   if (Math.random() * 100 < 50) {
@@ -87,18 +97,20 @@ for (let i = 0; i < 10; i++) {
   } else {
     persons[i] = new Warrior(name, hp, atk, def);
   }
+  playerNames.splice(playerNames.indexOf(name))
 }
 console.log(things);
 console.log(persons);
-while (things.length > 0) {
-  persRand = Math.floor(Math.random() * (persons.length));
-  a=Math.floor(Math.random() * (things.length+1));
-  b= Math.floor(Math.random() * (things.length-a+1));
-  th=things.splice(a, b);
-  console.log(th)
-  if (th.length>0) {
-  persons[persRand].setThings(th);
-  persons[persRand].equip();}
+let tempThings = [...things];
+while (tempThings.length > 0) {
+  persRand = Math.floor(Math.random() * persons.length);
+  a = Math.floor(Math.random() * (tempThings.length + 1));
+  b = Math.floor(Math.random() * (tempThings.length - a + 1));
+  th = tempThings.splice(a, b);
+  console.log(th);
+  if (th.length > 0) {
+    persons[persRand].setThings(th);
+  }
 }
 
 console.log(persons);
@@ -108,14 +120,12 @@ while (persons.length > 1) {
   while (a == b) {
     b = Math.floor(Math.random() * persons.length);
   }
-  console.log('Нападающий ' +persons[a].name);
-  console.log('Защита ' +persons[b].name);
-  persons[b].removeLife(persons[a].bAtk)
-  if (persons[b].hp < 0) {
-    console.log('Умер ' +persons[b].name);
+  console.log("Нападающий " + persons[a].name);
+  console.log("Защита " + persons[b].name);
+  persons[b].removeLife(persons[a].atk);
+  if (!persons[b].isLive()) {
+    console.log("Умер " + persons[b].name);
     persons.splice(b, 1);
-
   }
-
 }
-console.log('Победитель ' + persons[0].name)
+console.log("Победитель " + persons[0].name);

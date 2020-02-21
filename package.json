@@ -1,5 +1,9 @@
 {
     "scripts": {
-        "start": "node z6.js"
+        "start": "node z6.js",
+        "test": "jest"
+    },
+    "devDependencies": {
+        "jest": "^25.1.0"
     }
 }
